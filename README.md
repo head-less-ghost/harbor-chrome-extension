@@ -24,7 +24,7 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
 
 ### 1. Load the extension
 
-1. Download the latest release and extract it.
+1. Download the latest [release](https://github.com/head-less-ghost/harbor-chrome-extension/releases) and extract it.
 2. Open `chrome://extensions`.
 3. Enable **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder.
