@@ -2,7 +2,7 @@
 
 A Chrome extension that forwards download links to [Harbor](https://github.com/thsnkhn/harbor) on macOS.
 
-there is a test version of Firefox too:a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
+there is a test version of Firefox too: <a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
   <img src="firefox.svg" alt="link!!" width="400">
 </a>
 
