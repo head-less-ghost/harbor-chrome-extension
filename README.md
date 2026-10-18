@@ -2,6 +2,8 @@
 
 A Chrome extension that forwards download links to [Harbor](https://github.com/thsnkhn/harbor) on macOS.
 
+there is a test version of Firefox too:![Screenshot](firefox.png)
+
 It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harbor with the `harbor://download?url=...` scheme.
 
 ## Features
