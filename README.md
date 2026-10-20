@@ -32,7 +32,6 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
 2. Open `chrome://extensions`.
 3. Enable **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder.
-5. Copy the **extension ID** shown on the card.
 
 ### 2. Register the native host
 
@@ -49,8 +48,7 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
    ./install.sh
    ```
 
-3. Paste the extension ID when prompted.
-4. Quit Chrome completely (**Cmd + Q**), then reopen it.
+3. Quit Chrome completely (**Cmd + Q**), then reopen it.
 
 ### 3. Test
 
