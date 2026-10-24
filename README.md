@@ -46,7 +46,9 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
    ./install.sh
    ```
 
-3. Quit Chrome completely (**Cmd + Q**), then reopen it.
+3. Paste the extension ID in terminal
+
+4. Quit Chrome completely (**Cmd + Q**), then reopen it.
 
 ### 3. Test
 
