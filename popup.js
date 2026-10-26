@@ -2,6 +2,7 @@ const $url = document.getElementById("url");
 const $send = document.getElementById("send");
 const $status = document.getElementById("status");
 const $intercept = document.getElementById("intercept");
+const $test = document.getElementById("test");
 
 function status(text, kind) {
   $status.textContent = text || "";
@@ -39,6 +40,21 @@ $send.addEventListener("click", async () => {
     status(e.message || "Background error", "err");
   } finally {
     $send.disabled = false;
+  }
+});
+
+/* Check that the native helper is installed and answering */
+$test.addEventListener("click", async () => {
+  $test.disabled = true;
+  status("Checking helper…");
+  try {
+    const res = await chrome.runtime.sendMessage({ type: "PING" });
+    if (res?.ok) status("Native helper connected", "ok");
+    else status(res?.error || "Native helper not reachable", "err");
+  } catch (e) {
+    status(e.message || "Native helper not reachable", "err");
+  } finally {
+    $test.disabled = false;
   }
 });
 

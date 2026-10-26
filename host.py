@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Native Messaging host for Harbor Chrome extension.
-Receives a URL from Chrome and opens it with Harbor via the harbor:// URL scheme.
+Native Messaging host for the Harbor Chrome extension.
+Receives a URL from the browser and opens it with Harbor via the harbor:// URL scheme.
 """
 
 import json
@@ -43,43 +43,67 @@ def write_msg(obj):
     sys.stdout.buffer.flush()
 
 
+def usable_url(value):
+    """Return the value if it is a plain http(s) URL, otherwise an empty string."""
+    if not isinstance(value, str) or not value:
+        return ""
+    parsed = urlparse(value)
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        return ""
+    return value
+
+
+def scheme_url(url, referrer):
+    out = "harbor://download?url=" + quote(url, safe="")
+    ref = usable_url(referrer)
+    if ref:
+        out += "&referrer=" + quote(ref, safe="")
+    return out
+
+
+def handle(msg):
+    if not isinstance(msg, dict):
+        return {"ok": False, "error": "Expected a JSON object."}
+
+    action = msg.get("action") or "download"
+
+    if action == "ping":
+        return {"ok": True, "host": "com.harbor.chrome"}
+
+    if action != "download":
+        return {"ok": False, "error": "Unknown action."}
+
+    url = usable_url(msg.get("url"))
+    if not url:
+        return {"ok": False, "error": "Only valid HTTP/HTTPS URLs are accepted."}
+
+    result = subprocess.run(
+        ["/usr/bin/open", scheme_url(url, msg.get("referrer"))],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        timeout=12,
+        check=False,
+    )
+
+    if result.returncode == 0:
+        return {"ok": True}
+
+    detail = (result.stderr or "").strip()[:180]
+    return {
+        "ok": False,
+        "error": "Could not open Harbor. Is it installed?" +
+                 ((" " + detail) if detail else ""),
+    }
+
+
 def main():
     while True:
         try:
             msg = read_msg()
             if msg is None:
                 return
-
-            url = ""
-            if isinstance(msg, dict):
-                url = msg.get("url") or ""
-                # accept either {url: "..."} or {action: "download", url: "..."}
-
-            parsed = urlparse(url)
-            if parsed.scheme not in ("http", "https") or not parsed.netloc:
-                write_msg({"ok": False, "error": "Only valid HTTP/HTTPS URLs are accepted."})
-                continue
-
-            scheme_url = "harbor://download?url=" + quote(url, safe="")
-
-            result = subprocess.run(
-                ["/usr/bin/open", scheme_url],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.PIPE,
-                text=True,
-                timeout=12,
-                check=False,
-            )
-
-            if result.returncode == 0:
-                write_msg({"ok": True})
-            else:
-                detail = (result.stderr or "").strip()[:180]
-                write_msg({
-                    "ok": False,
-                    "error": "Could not open Harbor. Is it installed?" +
-                             ((" " + detail) if detail else "")
-                })
+            write_msg(handle(msg))
         except Exception as exc:
             try:
                 write_msg({"ok": False, "error": str(exc)[:280]})

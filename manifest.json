@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Harbor download helper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Send downloads from Chrome to Harbor on macOS.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2/pDYhRKC+geQ2RNTUamoIf2dz50ECKEL1vSrb3Oqk8SzcSGKNEKpwt39P7a7x3qh4UdUwnPE7G7YJnf3GEr4HS4vX7CTaaItP4hGplcJxhytC7GP0qziFufuuVAawSoAeeG8GCz0XYImnPfXLm9+NL27ylK8w1C5Srm4ZYvEWGkk+tRjOkPJAu7NBnVwtnlHIIgz0St9XD+us7ok+khRVffuvi1qndawjHA8Po5FIYozDfXLTY5rj637aEXwERT7Sz+khEJe3zYLyaDYd1Jzdw6cgp5bgA7fFBDjT0ovGgP9PMdW1dnUf8ghiNQRhGoncbpCyJ4dGnZumYSxpaLVwIDAQAB",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -15,9 +16,6 @@
     "tabs",
     "nativeMessaging",
     "notifications"
-  ],
-  "host_permissions": [
-    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"

@@ -253,3 +253,28 @@ input[type="url"]:focus {
 .switch input:focus-visible + .slider {
   box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.3);
 }
+
+/* Test helper link */
+.link-btn {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #007aff;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+.link-btn:disabled {
+  color: #8e8e93;
+  cursor: default;
+  text-decoration: none;
+}

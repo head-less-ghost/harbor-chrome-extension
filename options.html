@@ -16,8 +16,9 @@
         <div>
           <strong>Intercept Chrome downloads</strong>
           <p>
-            When Chrome starts a download, cancel it and open the same URL in
-            Harbor instead. Cookies and login state are not transferred.
+            When Chrome starts a download, hand the URL to Harbor instead. If
+            Harbor can't be reached the download stays in Chrome. Cookies and
+            login state are not transferred.
           </p>
         </div>
       </label>
@@ -26,7 +27,7 @@
         <input type="checkbox" id="notifications" />
         <div>
           <strong>Show notifications</strong>
-          <p>Brief desktop notification after a successful handoff.</p>
+          <p>Brief desktop notification after a handoff, or when one fails.</p>
         </div>
       </label>
     </section>
@@ -40,14 +41,20 @@
           Load this extension in <code>chrome://extensions</code> (Developer
           mode → Load unpacked).
         </li>
-        <li>Copy the extension ID shown on the card.</li>
         <li>
           In Terminal, go to this folder and run:
           <pre>chmod +x install.sh && ./install.sh</pre>
         </li>
-        <li>Paste the extension ID when asked.</li>
-        <li>Quit Chrome completely (Cmd+Q) and reopen it.</li>
+        <li>Quit the browser completely (Cmd+Q) and reopen it.</li>
+        <li>
+          Open the Harbor popup and click <strong>Test native helper</strong>.
+        </li>
       </ol>
+      <p class="note">
+        The extension ID is fixed inside the package, so the installer sets up
+        Chrome, Chromium, Brave, Edge, Vivaldi and Arc automatically — whichever
+        of them are installed.
+      </p>
       <p class="note">
         The helper lives at<br />
         <code>~/Library/Application Support/HarborChrome/</code>
