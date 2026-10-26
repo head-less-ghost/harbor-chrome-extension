@@ -4,8 +4,6 @@ A Chrome extension that forwards download links to [Harbor](https://github.com/t
 
 It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harbor with the `harbor://download?url=...` scheme.
 
-### locking for firefox extension? [Firefox](https://github.com/head-less-ghost/harbor-firefox-extension).
-
 ## Features
 
 - **Context menu** — right-click links, images, video, audio, the page, or selected text → Download with Harbor
@@ -30,6 +28,7 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
 2. Open `chrome://extensions`.
 3. Enable **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder.
+5. Copy the **extension ID** shown on the card.
 
 ### 2. Register the native host
 
@@ -46,8 +45,7 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
    ./install.sh
    ```
 
-3. Paste the extension ID in terminal
-
+3. Paste the extension ID when prompted.
 4. Quit Chrome completely (**Cmd + Q**), then reopen it.
 
 ### 3. Test

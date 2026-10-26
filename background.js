@@ -12,12 +12,7 @@ const MENU = {
 
 /** Same URL is ignored for this many ms after a successful send */
 const DEDUPE_MS = 10000;
-/** Ignore downloads that started before the extension was ready (plus a short grace) */
-const STARTUP_GRACE_MS = 3000;
-
 const recent = new Map();
-/** Timestamp (ms) after which we accept auto-intercept downloads */
-let interceptReadyAt = Date.now() + STARTUP_GRACE_MS;
 
 function prune() {
   const cut = Date.now() - DEDUPE_MS;
@@ -48,21 +43,6 @@ function urlFromSelection(text) {
   if (!text) return null;
   const m = text.match(/https?:\/\/[^\s<>"']+/i);
   return m ? m[0].replace(/[.,;:!?)]+$/, "") : null;
-}
-
-/**
- * True if this download item started after the extension became ready.
- * Prevents handing off old / in-progress downloads from before install or reload.
- */
-function isNewEnough(item) {
-  // Always respect the in-memory grace after SW start / install
-  if (Date.now() < interceptReadyAt) return false;
-
-  if (item && item.startTime) {
-    const started = Date.parse(item.startTime);
-    if (!Number.isNaN(started) && started < interceptReadyAt) return false;
-  }
-  return true;
 }
 
 /**
@@ -114,10 +94,6 @@ function notify(title, message, isError) {
 /* ---------- Install / context menus ---------- */
 
 chrome.runtime.onInstalled.addListener(async () => {
-  // Reset readiness so we don't intercept anything from before this install/update
-  interceptReadyAt = Date.now() + STARTUP_GRACE_MS;
-  await chrome.storage.local.set({ interceptReadyAt });
-
   await chrome.contextMenus.removeAll();
 
   chrome.contextMenus.create({
@@ -158,11 +134,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   };
   const stored = await chrome.storage.local.get(defaults);
   await chrome.storage.local.set({ ...defaults, ...stored });
-});
-
-// Service worker may restart later; keep a short grace on each wake
-chrome.runtime.onStartup?.addListener?.(() => {
-  interceptReadyAt = Date.now() + STARTUP_GRACE_MS;
 });
 
 /* ---------- Context menu clicks ---------- */
@@ -213,8 +184,6 @@ chrome.downloads.onCreated.addListener(async (item) => {
     if (!isHttpUrl(item.url)) return;
     if (item.byExtensionId === chrome.runtime.id) return;
     if (alreadySent(item.url)) return;
-    // Skip downloads that started before install / reload / startup grace
-    if (!isNewEnough(item)) return;
 
     // Cancel in Chrome and remove the list entry
     await chrome.downloads.cancel(item.id);
