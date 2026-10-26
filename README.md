@@ -4,6 +4,8 @@ A Chrome extension that forwards download links to [Harbor](https://github.com/t
 
 It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harbor with the `harbor://download?url=...` scheme.
 
+### locking for firefox version? [FIREFOX](https://github.com/head-less-ghost/harbor-firefox-extension)
+
 ## Features
 
 - **Context menu** — right-click links, images, video, audio, the page, or selected text → Download with Harbor
