@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 # Install the Native Messaging host so Chromium browsers can talk to Harbor.
 set -euo pipefail
 

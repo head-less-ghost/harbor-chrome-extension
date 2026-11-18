@@ -32,6 +32,34 @@
       </label>
     </section>
 
+    <section class="filters">
+      <h2>Filters</h2>
+      <p class="hint">Only apply to auto-intercepted downloads. Right-click and popup downloads always go to Harbor.</p>
+
+      <div class="field-block">
+        <strong>Minimum file size</strong>
+        <p>Downloads smaller than this stay in Chrome. Set 0 to send everything. If a file's size is unknown, it goes to Harbor.</p>
+        <div class="inline">
+          <input type="number" id="minSizeValue" min="0" step="any" value="0" />
+          <select id="minSizeUnit">
+            <option value="1024">KB</option>
+            <option value="1048576" selected>MB</option>
+            <option value="1073741824">GB</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <strong>Never download from these sites</strong>
+        <p>Downloads from, or started on, these sites stay in Chrome. A domain also covers its subdomains.</p>
+        <div class="inline">
+          <input type="text" id="domainInput" placeholder="example.com" spellcheck="false" autocomplete="off" />
+          <button type="button" id="domainAdd">Add</button>
+        </div>
+        <ul id="domainList"></ul>
+      </div>
+    </section>
+
     <div id="msg" role="status"></div>
 
     <section class="setup">

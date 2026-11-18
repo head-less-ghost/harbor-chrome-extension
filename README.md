@@ -4,8 +4,6 @@ A Chrome extension that forwards download links to [Harbor](https://github.com/t
 
 It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harbor with the `harbor://download?url=...` scheme.
 
-### locking for firefox version? [FIREFOX](https://github.com/head-less-ghost/harbor-firefox-extension)
-
 ## Features
 
 - **Context menu** — right-click links, images, video, audio, the page, or selected text → Download with Harbor
@@ -15,6 +13,8 @@ It uses Chrome Native Messaging to pass URLs to a local helper, which opens Harb
 - **Referer forwarding** — the page a link came from is passed to Harbor, which some file hosts require
 - **Test helper** — one click in the popup tells you whether the native host is reachable
 - **Notifications** — optional desktop confirmation after a handoff, and always on failure
+- **Minimum file size** — set a size limit in Settings (e.g. 2 MB); smaller auto-intercepted downloads stay in Chrome. If Chrome can't tell the size, the download goes to Harbor
+- **Blocked sites** — like IDM's exclude list: add domains in Settings, or click **Never download from this site** in the popup. Downloads from those sites (or started on a page of that site) stay in Chrome; a domain also covers its subdomains
 - **Deduplication** — the same URL is not sent again for a few seconds
 
 **Note:** Only the URL and the referer are sent. Cookies, login state, and request headers are not transferred, so authenticated downloads may still fail.
@@ -73,6 +73,8 @@ The extension does not request access to web pages: there are no host permission
 Auto-intercept is **on by default**. Turn it off in the popup or in Settings if you prefer Chrome to handle downloads.
 
 Only the URL and referer are forwarded, so some sites may not work.
+
+The size limit and blocked sites only affect auto-intercepted downloads. Right-click and popup downloads always go to Harbor.
 
 ## Troubleshooting
 

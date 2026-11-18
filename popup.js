@@ -74,6 +74,46 @@ document.getElementById("current").addEventListener("click", async () => {
   }
 });
 
+/* Never intercept downloads from the current site (like IDM's exclude list) */
+const $block = document.getElementById("block");
+let siteHost = "";
+
+function setBlockLabel(blocked) {
+  $block.textContent = blocked
+    ? "Allow Harbor on " + siteHost
+    : "Never download from " + siteHost;
+}
+
+function isBlocked(list) {
+  return (list || []).some((d) => siteHost === d || siteHost.endsWith("." + d));
+}
+
+(async () => {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab?.url || !/^https?:\/\//i.test(tab.url)) return;
+    siteHost = new URL(tab.url).hostname.toLowerCase();
+    const { blockedDomains } = await chrome.storage.local.get({ blockedDomains: [] });
+    setBlockLabel(isBlocked(blockedDomains));
+    $block.hidden = false;
+  } catch {}
+})();
+
+$block.addEventListener("click", async () => {
+  const { blockedDomains } = await chrome.storage.local.get({ blockedDomains: [] });
+  let next;
+  if (isBlocked(blockedDomains)) {
+    // Remove the entry (or parent domain entry) that covers this host
+    next = blockedDomains.filter((d) => !(siteHost === d || siteHost.endsWith("." + d)));
+    status("Harbor allowed on " + siteHost, "ok");
+  } else {
+    next = [...blockedDomains, siteHost].sort();
+    status(siteHost + " will stay in Chrome", "ok");
+  }
+  await chrome.storage.local.set({ blockedDomains: next });
+  setBlockLabel(isBlocked(next));
+});
+
 /* Settings gear */
 document.getElementById("options").addEventListener("click", () => {
   chrome.runtime.openOptionsPage();

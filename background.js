@@ -38,6 +38,58 @@ function isHttpUrl(url) {
   }
 }
 
+/* ---------- Filters: blocked sites + minimum size ---------- */
+
+/** "https://www.Example.com/path", "*.example.com" or "example.com" -> "www.example.com" */
+function normalizeDomain(input) {
+  if (!input || typeof input !== "string") return "";
+  let s = input.trim().toLowerCase().replace(/^\*\./, "");
+  if (!s) return "";
+  if (!/^[a-z][a-z0-9+.-]*:\/\//.test(s)) s = "http://" + s;
+  try {
+    return new URL(s).hostname.replace(/^\.+|\.+$/g, "");
+  } catch {
+    return "";
+  }
+}
+
+/** A blocked domain also covers its subdomains (example.com covers cdn.example.com). */
+function hostMatches(host, domain) {
+  return host === domain || host.endsWith("." + domain);
+}
+
+/** True if the download URL, its final URL or the page it came from is on a blocked site. */
+function isBlockedSite(blockedDomains, urls) {
+  const blocked = (blockedDomains || []).map(normalizeDomain).filter(Boolean);
+  if (!blocked.length) return false;
+  for (const url of urls) {
+    if (!isHttpUrl(url)) continue;
+    const host = new URL(url).hostname.toLowerCase();
+    if (blocked.some((d) => hostMatches(host, d))) return true;
+  }
+  return false;
+}
+
+/** Size in bytes if Chrome knows it, otherwise 0. */
+function knownSize(item) {
+  if (item.totalBytes > 0) return item.totalBytes;
+  if (item.fileSize > 0) return item.fileSize;
+  return 0;
+}
+
+/** Chrome sometimes reports the size a moment after onCreated; poll briefly. */
+async function waitForSize(item) {
+  let size = knownSize(item);
+  for (let i = 0; i < 6 && !size; i++) {
+    await new Promise((r) => setTimeout(r, 250));
+    const [cur] = await chrome.downloads.search({ id: item.id });
+    if (!cur) return 0;
+    size = knownSize(cur);
+    if (cur.state !== "in_progress") break;
+  }
+  return size;
+}
+
 /**
  * Drop trailing punctuation from a URL picked out of text, but keep a closing
  * paren that actually belongs to the URL (e.g. .../Foo_(bar)).
@@ -190,7 +242,8 @@ chrome.runtime.onInstalled.addListener(async () => {
   const defaults = {
     intercept: true,
     notifications: true,
-    minSize: 0,
+    minSize: 0, // bytes; 0 = no limit
+    blockedDomains: [],
   };
   const stored = await chrome.storage.local.get(defaults);
   await chrome.storage.local.set({ ...defaults, ...stored });
@@ -244,7 +297,12 @@ const MAX_AGE_MS = 15000; // only handle downloads that just started
 
 chrome.downloads.onCreated.addListener(async (item) => {
   try {
-    const { intercept } = await chrome.storage.local.get({ intercept: true });
+    const { intercept, minSize, blockedDomains } =
+      await chrome.storage.local.get({
+        intercept: true,
+        minSize: 0,
+        blockedDomains: [],
+      });
     if (!intercept) return;
     if (!item || item.id == null) return;
     if (!isHttpUrl(item.url)) return;
@@ -263,20 +321,58 @@ chrome.downloads.onCreated.addListener(async (item) => {
       return;
     }
 
+    // Sites the user told Harbor to leave alone stay in Chrome.
+    if (isBlockedSite(blockedDomains, [item.url, item.finalUrl, item.referrer])) {
+      console.log("Harbor: skipped blocked site", item.url);
+      return;
+    }
+
+    // Files smaller than the limit stay in Chrome. If Chrome doesn't know the
+    // size yet, hold the download for a moment until it does. If the size never
+    // shows up, the download goes to Harbor as usual.
+    let paused = false;
+    if (minSize > 0) {
+      let size = knownSize(item);
+      if (!size) {
+        try {
+          await chrome.downloads.pause(item.id);
+          paused = true;
+        } catch (_) {}
+        size = await waitForSize(item);
+      }
+      if (size > 0 && size < minSize) {
+        console.log("Harbor: skipped small file", item.url, size);
+        if (paused) {
+          try {
+            await chrome.downloads.resume(item.id);
+          } catch (_) {}
+        }
+        return;
+      }
+    }
+
     // Dedupe that survives service-worker restarts
     const { sent = {} } = await chrome.storage.session.get("sent");
     const now = Date.now();
     for (const u in sent) if (now - sent[u] > 60000) delete sent[u];
-    if (sent[item.url]) return;
+    if (sent[item.url]) {
+      if (paused) {
+        try {
+          await chrome.downloads.resume(item.id);
+        } catch (_) {}
+      }
+      return;
+    }
     sent[item.url] = now;
     await chrome.storage.session.set({ sent });
 
     // Hold the Chrome download so a failed handoff can be undone.
-    let paused = false;
-    try {
-      await chrome.downloads.pause(item.id);
-      paused = true;
-    } catch (_) {}
+    if (!paused) {
+      try {
+        await chrome.downloads.pause(item.id);
+        paused = true;
+      } catch (_) {}
+    }
 
     try {
       await sendToHarbor(item.url, { force: true, referrer: item.referrer });
@@ -331,7 +427,12 @@ chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
 
   if (msg?.type === "GET_SETTINGS") {
     chrome.storage.local
-      .get({ intercept: true, notifications: true })
+      .get({
+        intercept: true,
+        notifications: true,
+        minSize: 0,
+        blockedDomains: [],
+      })
       .then((s) => reply({ ok: true, ...s }));
     return true;
   }

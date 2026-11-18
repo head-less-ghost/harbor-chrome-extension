@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python or python3
 """
 Native Messaging host for the Harbor Chrome extension.
 Receives a URL from the browser and opens it with Harbor via the harbor:// URL scheme.

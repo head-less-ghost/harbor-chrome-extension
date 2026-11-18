@@ -278,3 +278,7 @@ input[type="url"]:focus {
   cursor: default;
   text-decoration: none;
 }
+
+[hidden] {
+  display: none !important;
+}
