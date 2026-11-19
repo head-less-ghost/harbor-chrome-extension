@@ -124,3 +124,22 @@ Bug reports and pull requests are welcome. Include your macOS, browser, and Harb
 ## Disclaimer
 
 Independent community project. Not affiliated with or endorsed by the Harbor app or its maintainers.
+
+## ❤️ Support My Work
+
+If you enjoy my open-source projects and would like to support my work, you can make a cryptocurrency donation. Every contribution is appreciated!
+
+### 💎 TON
+**Network:** TON
+
+`UQAXA1ITJ4Y-5sHeRCjs7KS9jKi-Y_bpcx0LEXnB3yRq-oSl`
+
+### ⟠ Ethereum (ETH) And 💵 USDT
+**Network:** Ethereum
+
+`0xb381dc93fb3a40836d40cc438c3bb67f1b08b1a5`
+
+### Thank you for supporting my projects! ❤️
+
+
+
