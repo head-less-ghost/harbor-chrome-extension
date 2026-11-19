@@ -121,10 +121,6 @@ The site may need cookies or a login. Use a direct public link, or turn off auto
 
 Bug reports and pull requests are welcome. Include your macOS, browser, and Harbor versions, plus the exact error message. Do not include private URLs, tokens, or credentials.
 
-## Disclaimer
-
-Independent community project. Not affiliated with or endorsed by the Harbor app or its maintainers.
-
 ## ❤️ Support My Work
 
 If you enjoy my open-source projects and would like to support my work, you can make a cryptocurrency donation. Every contribution is appreciated!
