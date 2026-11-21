@@ -10,7 +10,7 @@ Choose your browser:
   </a>
   &nbsp; · &nbsp;
   <a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
-    <img src="firefox.svg" width="18" height="18" alt="Firefox" /> <strong>Firefox</strong>
+    <img src="firefox.svg" width="50" height="50" alt="Firefox" /> <strong>Firefox</strong>
   </a>
 </p>
 
@@ -46,7 +46,7 @@ Choose your browser:
 ### Firefox
 
 <a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
-  <img src="firefox.svg" width="24" height="24" alt="Firefox" />
+  <img src="firefox.svg" width="60" height="60" alt="Firefox" />
   **Get Harbor Download Helper for Firefox**
 </a>
 
@@ -111,6 +111,61 @@ You should see:
 
 Now right-click an HTTP or HTTPS link and select **Download with Harbor**.
 
+
+## Uninstallation
+
+1. Remove the extension from `chrome://extensions`.
+2. Remove the native messaging files:
+
+```bash
+rm -f "$HOME/Library/Application Support"/*/NativeMessagingHosts/com.harbor.chrome.json
+rm -rf "$HOME/Library/Application Support/HarborChrome"
+```
+
+## Discover Another Project
+
+<p align="center">
+  <img src="images/turbofetch-promo.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
+</p>
+
+### Meet TurboFetch
+
+Looking for a way to download videos from your favorite platforms?
+
+**TurboFetch** helps you download videos and media from 14+ popular platforms.
+
+YouTube · Vimeo · TikTok · Instagram · Facebook · X · Reddit · SoundCloud · Bandcamp · Dailymotion · Twitch · Bilibili · Tumblr · Streamable
+
+<p align="center">
+  <a href="YOUR_TURBOFETCH_INSTALL_URL">
+    <strong>GET TURBOFETCH →</strong>
+  </a>
+</p>
+
+
+## Support My Work
+
+If you enjoy my open-source projects and would like to support development, cryptocurrency donations are appreciated.
+
+### TON
+
+Network: TON
+
+```text
+UQAXA1ITJ4Y-5sHeRCjs7KS9jKi-Y_bpcx0LEXnB3yRq-oSl
+```
+
+### Ethereum (ETH) / USDT
+
+Network: Ethereum
+
+```text
+0xb381dc93fb3a40836d40cc438c3bb67f1b08b1a5
+```
+
+Thank you for supporting my projects!
+
+---
 ## Automatic Forwarding
 
 Auto-intercept is enabled by default.
@@ -186,61 +241,6 @@ Some websites require authentication, cookies, or request headers that are not t
 
 Try a direct public download link or disable Auto-intercept.
 
-## Uninstallation
-
-1. Remove the extension from `chrome://extensions`.
-2. Remove the native messaging files:
-
-```bash
-rm -f "$HOME/Library/Application Support"/*/NativeMessagingHosts/com.harbor.chrome.json
-rm -rf "$HOME/Library/Application Support/HarborChrome"
-```
-
-## Support My Work
-
-If you enjoy my open-source projects and would like to support development, cryptocurrency donations are appreciated.
-
-### TON
-
-Network: TON
-
-```text
-UQAXA1ITJ4Y-5sHeRCjs7KS9jKi-Y_bpcx0LEXnB3yRq-oSl
-```
-
-### Ethereum (ETH) / USDT
-
-Network: Ethereum
-
-```text
-0xb381dc93fb3a40836d40cc438c3bb67f1b08b1a5
-```
-
-Thank you for supporting my projects!
-
----
-
-## Discover Another Project
-
-<p align="center">
-  <img src="images/turbofetch-promo.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
-</p>
-
-### Meet TurboFetch
-
-Looking for a way to download videos from your favorite platforms?
-
-**TurboFetch** helps you download videos and media from 14+ popular platforms.
-
-YouTube · Vimeo · TikTok · Instagram · Facebook · X · Reddit · SoundCloud · Bandcamp · Dailymotion · Twitch · Bilibili · Tumblr · Streamable
-
-<p align="center">
-  <a href="YOUR_TURBOFETCH_INSTALL_URL">
-    <strong>GET TURBOFETCH →</strong>
-  </a>
-</p>
-
----
 
 ## Contributing
 
