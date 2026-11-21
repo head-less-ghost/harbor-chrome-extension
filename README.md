@@ -125,7 +125,7 @@ rm -rf "$HOME/Library/Application Support/HarborChrome"
 ## Discover Another Project
 
 <p align="center">
-  <img src="images/turbofetch-promo.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
+  <img src="TurboFetch Neon Video Downloader.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
 </p>
 
 ### Meet TurboFetch
@@ -137,7 +137,7 @@ Looking for a way to download videos from your favorite platforms?
 YouTube · Vimeo · TikTok · Instagram · Facebook · X · Reddit · SoundCloud · Bandcamp · Dailymotion · Twitch · Bilibili · Tumblr · Streamable
 
 <p align="center">
-  <a href="YOUR_TURBOFETCH_INSTALL_URL">
+  <a href="https://github.com/head-less-ghost/TurboFetch">
     <strong>GET TURBOFETCH →</strong>
   </a>
 </p>
