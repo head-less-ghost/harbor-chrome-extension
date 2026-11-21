@@ -125,7 +125,7 @@ rm -rf "$HOME/Library/Application Support/HarborChrome"
 ## Discover Another Project
 
 <p align="center">
-  <img src="TurboFetch Neon Video Downloader.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
+  <img src="TurboFetch Neon Video Downloader.png" width="80%" alt="TurboFetch — Download videos from 14+ platforms" />
 </p>
 
 ### Meet TurboFetch
@@ -166,95 +166,3 @@ Network: Ethereum
 Thank you for supporting my projects!
 
 ---
-## Automatic Forwarding
-
-Auto-intercept is enabled by default.
-
-When Chrome starts a download, the extension attempts to send its URL to Harbor instead.
-
-You can:
-
-- Enable or disable automatic forwarding.
-- Set a minimum file size.
-- Block specific websites.
-- Keep small downloads in Chrome.
-- Receive notifications about successful or failed handoffs.
-
-The size limit and blocked sites only affect automatic forwarding. Right-click and popup downloads always go to Harbor.
-
-## Privacy & Permissions
-
-The extension requests:
-
-- `downloads`
-- `contextMenus`
-- `nativeMessaging`
-- `notifications`
-- `storage`
-- `tabs`
-
-The extension does not request website host permissions or use content scripts.
-
-It does not read webpage content.
-
-Only download URLs and available referrer information are forwarded to the native helper.
-
-Cookies, login information, and authentication headers are not transferred.
-
-## Troubleshooting
-
-### Native helper not reachable
-
-- Make sure `install.sh` completed successfully.
-- Restart your browser completely.
-- Confirm Python 3 is installed:
-
-```bash
-python3 --version
-```
-
-- Check that the native messaging manifest exists:
-
-```bash
-~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/com.harbor.chrome.json
-```
-
-### Downloads keep landing in Chrome
-
-Check whether Auto-intercept is enabled.
-
-If the handoff fails, Chrome keeps the download and the extension displays a notification.
-
-### Harbor does not open
-
-Confirm Harbor is installed and supports the `harbor://` URL scheme.
-
-Test it with:
-
-```bash
-open 'harbor://download?url=https%3A%2F%2Fexample.com%2Ftest.zip'
-```
-
-### A download fails in Harbor
-
-Some websites require authentication, cookies, or request headers that are not transferred.
-
-Try a direct public download link or disable Auto-intercept.
-
-
-## Contributing
-
-Bug reports, suggestions, and pull requests are welcome.
-
-When reporting an issue, include:
-
-- macOS version
-- Browser and version
-- Harbor version
-- Exact error message
-
-Please don't include private URLs, tokens, or credentials.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
