@@ -1,6 +1,6 @@
-Harbor Download Helper
+# Harbor Download Helper
 
-A lightweight browser extension that sends download links directly to Harbor, the macOS download manager.
+A lightweight browser extension that sends download links directly to **Harbor**, the macOS download manager.
 
 Choose your browser:
 
@@ -10,99 +10,108 @@ Choose your browser:
   </a>
   &nbsp; · &nbsp;
   <a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
-    <img src="firefox.svg" width="50" height="50" alt="Firefox" /> <strong>Firefox</strong>
+    <img src="firefox.svg" width="18" height="18" alt="Firefox" /> <strong>Firefox</strong>
   </a>
-</p>---
+</p>
 
-Features
+---
 
-- Context menu — Right-click links, images, video, audio, pages, or selected text → Download with Harbor.
-- Popup — Paste a URL or use the current tab's URL.
-- Auto-intercept — Automatically forward browser downloads to Harbor (enabled by default).
-- Safe handoff — Browser downloads are cancelled only after Harbor accepts the handoff.
-- Referer forwarding — Pass the originating page URL to Harbor.
-- Test helper — Check whether the native helper is reachable.
-- Notifications — Desktop confirmations and error notifications.
-- Minimum file size — Keep small downloads in your browser.
-- Blocked sites — Exclude domains and their subdomains from automatic forwarding.
-- Deduplication — Prevent the same URL from being forwarded repeatedly.
+## Features
 
-Note: Only the URL and referer are sent. Cookies, login sessions, and request headers are not transferred, so authenticated downloads may not work.
+- **Context menu** — Right-click links, images, video, audio, pages, or selected text → Download with Harbor.
+- **Popup** — Paste a URL or use the current tab's URL.
+- **Auto-intercept** — Automatically forward browser downloads to Harbor (enabled by default).
+- **Safe handoff** — Browser downloads are cancelled only after Harbor accepts the handoff.
+- **Referer forwarding** — Pass the originating page URL to Harbor.
+- **Test helper** — Check whether the native helper is reachable.
+- **Notifications** — Desktop confirmations and error notifications.
+- **Minimum file size** — Keep small downloads in your browser.
+- **Blocked sites** — Exclude domains and their subdomains from automatic forwarding.
+- **Deduplication** — Prevent the same URL from being forwarded repeatedly.
 
-Browser Support
+**Note:** Only the URL and referer are sent. Cookies, login sessions, and request headers are not transferred, so authenticated downloads may not work.
 
-Browser| Availability
-Chrome| Supported
-Brave| Supported
-Microsoft Edge| Supported
-Vivaldi| Supported
-Arc| Supported
-Chromium| Supported
-Firefox| Separate extension
+## Browser Support
 
-Firefox
+| Browser | Availability |
+|---|---|
+| Chrome | Supported |
+| Brave | Supported |
+| Microsoft Edge | Supported |
+| Vivaldi | Supported |
+| Arc | Supported |
+| Chromium | Supported |
+| Firefox | Separate extension |
+
+### Firefox
 
 <a href="https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/">
   <img src="firefox.svg" width="24" height="24" alt="Firefox" />
   **Get Harbor Download Helper for Firefox**
-</a>The Firefox version is maintained separately.
+</a>
 
-- "Install from Firefox Add-ons" (https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/)
-- "Firefox source code" (https://github.com/head-less-ghost/harbor-firefox-extension)
+The Firefox version is maintained separately.
+
+- [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/harbor-download-helper/)
+- [Firefox source code](https://github.com/head-less-ghost/harbor-firefox-extension)
 
 Firefox also requires its own native messaging helper on macOS.
 
-Requirements
+## Requirements
 
 - macOS
 - Chrome or another supported Chromium browser
 - Harbor installed
 - Python 3
-- Xcode Command Line Tools ("xcode-select --install")
+- Xcode Command Line Tools (`xcode-select --install`)
 
-Installation
+## Installation
 
-1. Download the extension
+### 1. Download the extension
 
-Download the "latest release" (https://github.com/head-less-ghost/harbor-chrome-extension/releases/latest) and extract it.
+Download the [latest release](https://github.com/head-less-ghost/harbor-chrome-extension/releases/latest) and extract it.
 
-2. Load the extension
+### 2. Load the extension
 
-1. Open "chrome://extensions".
+1. Open `chrome://extensions`.
 2. Enable Developer mode.
-3. Click Load unpacked.
+3. Click **Load unpacked**.
 4. Select the extracted extension folder.
 
-The extension ID is pinned by the "key" field in "manifest.json".
+The extension ID is pinned by the `key` field in `manifest.json`.
 
-3. Install the native helper
+### 3. Install the native helper
 
 Open Terminal in the extracted folder:
 
+```bash
 cd ~/your/path/to/harbor-chrome-extension
+```
 
 Run:
 
+```bash
 chmod +x install.sh
 ./install.sh
+```
 
 The installer registers the native helper for supported Chromium browsers.
 
-4. Restart your browser
+### 4. Restart your browser
 
-Completely quit the browser using "Cmd + Q", then reopen it.
+Completely quit the browser using `Cmd + Q`, then reopen it.
 
-5. Test the connection
+### 5. Test the connection
 
-Open the extension popup and click Test native helper.
+Open the extension popup and click **Test native helper**.
 
 You should see:
 
-"Native helper connected"
+`Native helper connected`
 
-Now right-click an HTTP or HTTPS link and select Download with Harbor.
+Now right-click an HTTP or HTTPS link and select **Download with Harbor**.
 
-Automatic Forwarding
+## Automatic Forwarding
 
 Auto-intercept is enabled by default.
 
@@ -118,16 +127,16 @@ You can:
 
 The size limit and blocked sites only affect automatic forwarding. Right-click and popup downloads always go to Harbor.
 
-Privacy & Permissions
+## Privacy & Permissions
 
 The extension requests:
 
-- "downloads"
-- "contextMenus"
-- "nativeMessaging"
-- "notifications"
-- "storage"
-- "tabs"
+- `downloads`
+- `contextMenus`
+- `nativeMessaging`
+- `notifications`
+- `storage`
+- `tabs`
 
 The extension does not request website host permissions or use content scripts.
 
@@ -137,77 +146,91 @@ Only download URLs and available referrer information are forwarded to the nativ
 
 Cookies, login information, and authentication headers are not transferred.
 
-Troubleshooting
+## Troubleshooting
 
-Native helper not reachable
+### Native helper not reachable
 
-- Make sure "install.sh" completed successfully.
+- Make sure `install.sh` completed successfully.
 - Restart your browser completely.
 - Confirm Python 3 is installed:
 
+```bash
 python3 --version
+```
 
 - Check that the native messaging manifest exists:
 
+```bash
 ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/com.harbor.chrome.json
+```
 
-Downloads keep landing in Chrome
+### Downloads keep landing in Chrome
 
 Check whether Auto-intercept is enabled.
 
 If the handoff fails, Chrome keeps the download and the extension displays a notification.
 
-Harbor does not open
+### Harbor does not open
 
-Confirm Harbor is installed and supports the "harbor://" URL scheme.
+Confirm Harbor is installed and supports the `harbor://` URL scheme.
 
 Test it with:
 
+```bash
 open 'harbor://download?url=https%3A%2F%2Fexample.com%2Ftest.zip'
+```
 
-A download fails in Harbor
+### A download fails in Harbor
 
 Some websites require authentication, cookies, or request headers that are not transferred.
 
 Try a direct public download link or disable Auto-intercept.
 
-Uninstallation
+## Uninstallation
 
-1. Remove the extension from "chrome://extensions".
+1. Remove the extension from `chrome://extensions`.
 2. Remove the native messaging files:
 
+```bash
 rm -f "$HOME/Library/Application Support"/*/NativeMessagingHosts/com.harbor.chrome.json
 rm -rf "$HOME/Library/Application Support/HarborChrome"
+```
 
-Support My Work
+## Support My Work
 
 If you enjoy my open-source projects and would like to support development, cryptocurrency donations are appreciated.
 
-TON
+### TON
 
 Network: TON
 
+```text
 UQAXA1ITJ4Y-5sHeRCjs7KS9jKi-Y_bpcx0LEXnB3yRq-oSl
+```
 
-Ethereum (ETH) / USDT
+### Ethereum (ETH) / USDT
 
 Network: Ethereum
 
+```text
 0xb381dc93fb3a40836d40cc438c3bb67f1b08b1a5
+```
 
 Thank you for supporting my projects!
 
 ---
 
-Discover Another Project
+## Discover Another Project
 
 <p align="center">
   <img src="images/turbofetch-promo.png" width="100%" alt="TurboFetch — Download videos from 14+ platforms" />
-</p>Meet TurboFetch
+</p>
+
+### Meet TurboFetch
 
 Looking for a way to download videos from your favorite platforms?
 
-TurboFetch helps you download videos and media from 14+ popular platforms.
+**TurboFetch** helps you download videos and media from 14+ popular platforms.
 
 YouTube · Vimeo · TikTok · Instagram · Facebook · X · Reddit · SoundCloud · Bandcamp · Dailymotion · Twitch · Bilibili · Tumblr · Streamable
 
@@ -215,9 +238,11 @@ YouTube · Vimeo · TikTok · Instagram · Facebook · X · Reddit · SoundCloud
   <a href="YOUR_TURBOFETCH_INSTALL_URL">
     <strong>GET TURBOFETCH →</strong>
   </a>
-</p>---
+</p>
 
-Contributing
+---
+
+## Contributing
 
 Bug reports, suggestions, and pull requests are welcome.
 
@@ -230,6 +255,6 @@ When reporting an issue, include:
 
 Please don't include private URLs, tokens, or credentials.
 
-License
+## License
 
-This project is licensed under the "MIT License" (LICENSE).
+This project is licensed under the [MIT License](LICENSE).
