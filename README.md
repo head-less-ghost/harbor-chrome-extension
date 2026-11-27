@@ -125,7 +125,7 @@ rm -rf "$HOME/Library/Application Support/HarborChrome"
 ## Discover Another Project
 
 <p align="center">
-  <img src="TurboFetch Neon Video Downloader.png" width="80%" alt="TurboFetch — Download videos from 14+ platforms" />
+  <img src="file_000000005de482108344190fc515433a.png" width="80%" alt="TurboFetch — Download videos from 14+ platforms" />
 </p>
 
 ### Meet TurboFetch
